@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FranklinWH MDF Guidelines</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#D38A3D;--dark:#3c3c3c;--mid:#58595b;--light:#f5f7f5;--warm:#faf6ef;--blue:#0eb9ff;--red:#ff5902;--white:#fff}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--light);color:var(--dark);line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{background:var(--white);border-bottom:4px solid var(--gold);padding:24px 0}
+.header-inner{display:flex;align-items:center;gap:16px}
+.header-inner img{height:28px;width:auto}
+.divider{height:24px;width:1px;background:#ddd}
+.subtitle{font-size:12px;font-weight:600;color:var(--mid)}
+.core{margin:24px 0;padding:20px;background:var(--warm);border-left:4px solid var(--gold);border-radius:8px}
+.core strong{color:var(--dark)}
+.core p,.info-banner p{font-size:14px;color:var(--mid)}
+.info-banner{margin-bottom:20px;padding:16px;background:#eef8ff;border-left:4px solid var(--blue);border-radius:8px;display:flex;gap:12px;align-items:flex-start}
+.info-banner svg{flex-shrink:0;margin-top:2px}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tab{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;border:1px solid #ddd;background:var(--white);color:var(--mid);cursor:pointer;transition:.2s}
+.tab.active{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.tab:hover:not(.active){background:#f0f0f0}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--white);border:1px solid #e0e0e0;border-radius:8px;margin-bottom:12px;overflow:hidden}
+.card-header{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:.2s}
+.card-header:hover{background:#fafafa}
+.card-header.open{background:var(--warm)}
+.card-title{font-weight:700;color:var(--dark)}
+.card-desc{font-size:12px;color:var(--mid);margin-top:2px}
+.badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;display:inline-flex;align-items:center;gap:4px;margin-left:8px}
+.badge-priority{color:#0a7a33;background:#e0f5e8}
+.badge-fast{color:var(--blue);background:#eef8ff}
+.chevron{width:20px;height:20px;transition:transform .2s;color:#aaa}
+.card-header.open .chevron{color:var(--gold);transform:rotate(180deg)}
+.card-body{display:none;padding:12px 20px 20px;border-top:2px solid var(--gold)}
+.card-body.open{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.qual-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.qual-header h3{font-size:11px;font-weight:700;letter-spacing:.5px}
+.qual-header.yes h3{color:#0a7a33}.qual-header.no h3{color:var(--red)}
+.qual-item{font-size:14px;color:var(--mid);margin-bottom:6px;display:flex;gap:8px}
+.qual-item .dot{font-weight:700}
+.qual-item .dot.yes{color:#0a7a33}.qual-item .dot.no{color:var(--red)}
+.info-box{padding:16px;border-radius:8px;background:var(--light);margin-top:16px}
+.info-box.gold{border-left:3px solid var(--gold)}.info-box.blue{border-left:3px solid var(--blue)}
+.info-box .label{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.info-box .text{font-size:14px;color:var(--mid)}
+.proof-box{padding:16px;border-radius:8px;background:#fafafa;border:1px dashed #ccc;margin-top:16px}
+.proof-box .label{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.proof-tags{display:flex;flex-wrap:wrap;gap:8px}
+.proof-tag{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--light);color:var(--mid);border:1px solid #ddd}
+.spif-section{padding:16px;border-radius:8px;background:#f9fafb;border:1px solid #e0e0e0;margin-top:16px}
+.spif-section .spif-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.spif-section .spif-sub{font-size:12px;color:var(--mid);margin-bottom:12px}
+.spif-opt{padding:16px;border-radius:8px;background:var(--white);border:1px solid #e0e0e0;margin-bottom:8px;cursor:pointer;transition:.2s}
+.spif-opt:hover{background:#fafafa}
+.spif-opt.open{background:var(--warm)}
+.spif-opt-header{display:flex;align-items:center;gap:8px}
+.spif-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:12px;flex-shrink:0}
+.spif-opt-title{font-weight:700;font-size:14px;color:var(--dark)}
+.spif-opt-desc{font-size:12px;color:var(--mid);margin-top:4px}
+.spif-detail{margin-top:12px;display:none}
+.spif-opt.open .spif-detail{display:block}
+.spif-detail-box{padding:12px;border-radius:8px;background:var(--light);margin-bottom:8px}
+.spif-detail-box .dlabel{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.spif-detail-box .dtext{font-size:12px;color:var(--mid)}
+.spif-flow{margin-top:12px;padding:12px;border-radius:8px;background:var(--warm);border-left:3px solid var(--gold);font-size:12px}
+.spif-flow strong{color:var(--dark)}
+.spif-flow span{color:var(--mid)}
+.ex-card{border-radius:8px;overflow:hidden;margin-bottom:12px;background:var(--white);cursor:pointer}
+.ex-card.approved{border:1px solid #c3e6cb}
+.ex-card.rejected{border:1px solid #f5c6cb}
+.ex-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.ex-left{display:flex;align-items:center;gap:12px}
+.ex-title{font-weight:700;font-size:14px;color:var(--dark)}
+.ex-body{display:none;padding:4px 20px 20px}
+.ex-body.open{display:block}
+.ex-body .elabel{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:4px;letter-spacing:.3px}
+.ex-body .etext{font-size:14px;color:var(--mid);margin-bottom:12px}
+.ex-box{padding:12px;border-radius:8px;margin-bottom:12px}
+.ex-box.light{background:var(--light)}
+.ex-box.warm{background:var(--warm);border-left:3px solid var(--gold)}
+.process-card{border-radius:8px;padding:20px;background:var(--white);border:1px solid #e0e0e0;margin-bottom:16px}
+.process-card h3{font-weight:700;color:var(--dark);margin-bottom:16px}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lane{padding:16px;border-radius:8px}
+.lane.fast{background:#eef8ff;border:1px solid var(--blue)}
+.lane.std{background:var(--warm);border:1px solid var(--gold)}
+.lane .ltitle{font-weight:700;font-size:14px;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.lane .ldesc{font-size:12px;color:var(--mid);margin-bottom:8px}
+.lane .ltime{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px}
+.lane.fast .ltime{color:var(--blue)}
+.lane.std .ltime{color:var(--gold)}
+.step{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.step:last-child{margin-bottom:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.step-title{font-weight:700;font-size:14px;color:var(--dark)}
+.step-desc{font-size:12px;color:var(--mid);margin-top:2px}
+.deadline{display:flex;gap:12px;align-items:flex-start;font-size:14px;margin-bottom:8px}
+.deadline .icon{color:var(--red);font-weight:700;flex-shrink:0}
+.deadline strong{color:var(--dark)}
+.deadline span{color:var(--mid)}
+.reminders{border-radius:8px;padding:20px;background:var(--dark);color:var(--white)}
+.reminders h3{font-weight:700;margin-bottom:12px}
+.rem-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rem-item{font-size:12px;display:flex;gap:8px;margin-bottom:6px}
+.rem-item .yes{color:#4ade80}.rem-item .no{color:#f87171}
+svg.check-icon circle{stroke:#0a7a33;fill:none}svg.check-icon path{stroke:#0a7a33;fill:none}
+svg.x-icon circle{stroke:var(--red);fill:none}svg.x-icon path{stroke:var(--red);fill:none}
+@media(max-width:600px){.grid2,.lanes,.rem-grid{grid-template-columns:1fr}}
+@media print{.tabs{display:none}.tab-content{display:block!important}.card-body{display:block!important}.ex-body{display:block!important}.spif-detail{display:block!important}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<div class="header-inner">
+<svg viewBox="140 340 1070 90" style="height:14px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg"><path fill="#7e7e7e" d="M587.24,347.66h-11.04c-2.9,0-5.26,2.19-5.26,4.89v41.64c0,1.3-.21,2.29-.54,3-.32.7-.96,1-2.25,1-1.07,0-2.04-.2-2.79-.6-.86-.4-1.82-1.3-3-2.79l-36.68-40.24c-1.72-1.7-3.86-3.3-6.43-4.69-2.57-1.5-6.22-2.19-10.83-2.19-3.75,0-6.86.7-9.44,1.9-2.57,1.3-4.72,2.79-6.22,4.59-1.61,1.8-2.68,3.6-3.43,5.19-.64,1.69-.96,3-.96,3.99v53.12c0,2.7,2.35,4.89,5.26,4.89h10.72c2.9,0,5.26-2.19,5.26-4.89v-45.43c0-.9.32-1.5,1.07-2,.75-.4,1.39-.7,2.04-.7.96.1,1.93.3,2.47.7.75.4,1.61,1.3,2.79,2.7l36.46,40.94c2.57,3.29,5.04,5.59,7.4,6.69,2.36,1.3,5.9,1.89,10.62,1.89s8.47-1.1,11.48-3.09c3.11-2.1,5.15-4.49,6.54-7.19,1.29-2.79,2.04-5.19,2.04-7.19v-51.23c0-2.7-2.35-4.89-5.26-4.89Z"/><path fill="#7e7e7e" d="M621.34,347.68h-10.72c-2.9,0-5.26,2.31-5.26,5.16v63.26c0,2.85,2.35,5.16,5.26,5.16h10.72c2.9,0,5.26-2.31,5.26-5.16v-63.26c0-2.85-2.35-5.16-5.26-5.16Z"/><path fill="#7e7e7e" d="M686.83,412.09l-30.89-24.61c-2.55-2.03-2.6-5.84-.1-7.93l27.23-22.79c3.72-3.11,1.48-9.09-3.41-9.09h-12.58c-1.22,0-2.41.42-3.35,1.18l-30.74,24.95c-1.21.98-1.91,2.44-1.91,3.98v12.09c0,1.54.7,3,1.91,3.98l32.35,26.22c.94.76,2.13,1.18,3.35,1.18h14.83c4.95,0,7.16-6.1,3.31-9.17Z"/><path fill="#7e7e7e" d="M780.04,403.99h-46.01c-1.29,0-2.79-.42-4.72-1.37-1.82-1.05-3.43-2.42-4.83-4.21-1.29-1.89-2.04-4-2.04-6.52v-39.05c0-2.85-2.35-5.16-5.26-5.16h-10.29c-2.9,0-5.26,2.31-5.26,5.16v49.26c0,1.89,1.07,4.42,3.11,7.48,2.04,3.26,4.72,5.89,7.83,8.31,3.22,2.32,6.54,3.48,9.87,3.48h57.59c2.9,0,5.26-2.31,5.26-5.16v-7.05c0-2.85-2.35-5.16-5.26-5.16Z"/><path fill="#7e7e7e" d="M814.46,347.68h-11.04c-2.9,0-5.26,2.31-5.26,5.16v63.26c0,2.85,2.35,5.16,5.26,5.16h11.04c2.9,0,5.26-2.31,5.26-5.16v-63.26c0-2.85-2.35-5.16-5.26-5.16Z"/><path fill="#7e7e7e" d="M931.46,347.66h-11.04c-2.9,0-5.26,2.19-5.26,4.9v41.69c0,1.3-.21,2.3-.54,3-.32.7-.97,1-2.25,1-1.07,0-2.04-.2-2.79-.6-.86-.4-1.82-1.3-3-2.8l-36.68-40.3c-1.72-1.7-3.86-3.3-6.43-4.7-2.57-1.5-6.22-2.2-10.83-2.2-3.75,0-6.86.7-9.44,1.9-2.57,1.3-4.72,2.8-6.22,4.6-1.61,1.8-2.68,3.6-3.43,5.2-.64,1.7-.96,3-.96,4v53.09c0,2.71,2.35,4.9,5.26,4.9h10.72c2.9,0,5.26-2.19,5.26-4.9v-45.39c0-.9.32-1.5,1.07-2,.75-.4,1.39-.7,2.04-.7.96.1,1.93.3,2.47.7.75.4,1.61,1.3,2.79,2.7l36.46,41c2.57,3.3,5.04,5.6,7.4,6.7,2.36,1.3,5.9,1.9,10.62,1.9s8.47-1.1,11.48-3.1c3.11-2.1,5.15-4.5,6.54-7.2,1.28-2.8,2.04-5.2,2.04-7.2v-51.29c0-2.71-2.35-4.9-5.26-4.9Z"/><path fill="#7e7e7e" d="M468.42,356.58c-2.25-2.51-4.81-4.62-7.72-6.17-2.99-1.59-6.11-2.3-9.33-2.3h-72.6c-2.9,0-5.26,2.29-5.26,5.13v7.42c0,2.83,2.35,5.13,5.26,5.13h64.96c.3,0,.58.04.87.09,1.49.29,2.74,1.15,3.51,2.32.48.76.77,1.65.77,2.61,0,1.38-.58,2.64-1.5,3.55-.22.21-.45.4-.7.57-.03.02-.06.04-.09.06-.81.53-1.79.84-2.84.84h-59.7c-3,0-5.68,1.25-7.93,3.55-2.14,2.4-3.33,5.65-3.33,9.73v8.68c.22,5.65.22,10.15.22,13.7,0,1.88.64,3.66,1.61,5.02,1.07,1.57,2.47,2.82,4.08,3.55,1.72.84,3.32,1.26,4.93,1.26h61.02c.61,0,1.36.02,2.12,0h.08s.71,0,1.76-.05c.8-.04,1.86-.81,2.69-1.67.02-.02.02-.03.04-.05.51-.43,1.04-.87,1.68-.86.25,0,.47,0,.68.09,1.25.48,2.09,2.54,4.57,2.54h12.01c2.9,0,5.26-2.29,5.26-5.13v-44.66c0-2.2-.66-4.59-1.93-7.22-1.31-2.71-3-5.34-5.15-7.74ZM446.97,401.97c-1.18,1.04-2.25,1.47-3.22,1.47h-44.5c-1.07,0-2.04-.42-3-1.36-1.07-.94-1.5-2.09-1.5-3.66.11-.73.43-1.67,1.18-3.03.75-1.26,2.14-1.89,4.07-1.89h42.58c.64,0,1.39.21,2.47.73,1.07.42,1.93,1.04,2.57,1.78.75.84,1.07,1.67,1.07,2.51,0,1.26-.64,2.41-1.72,3.45Z"/><path fill="#7e7e7e" d="M357.02,404.21c-1.39-4.21-2.68-7.26-3.97-9.47-1.4-2.11-3.91-3.78-4.63-4.67-.39-.48-.69-1.25-.59-2.23.1-1.01.4-1.84,1.18-2.65,1.21-1.26,4.54-4.97,4.26-8.98-.27-3.73,0-14.95,0-14.95,0-3.68-1.18-6.84-3.33-9.48-2.25-2.74-5.79-4.1-10.72-4.1h-76.89c-2.9,0-5.26,2.31-5.26,5.16v6.95c0,2.85,2.35,5.16,5.26,5.16h62.09c1.5,0,2.79.31,3.75.94,1.07.74,1.72,1.47,2.25,2.42.54.94.75,1.68.75,2.31,0,1.68-.75,3.16-2.25,4.21-1.5,1.06-3.11,1.58-4.93,1.58h-61.66c-2.9,0-5.26,2.31-5.26,5.16v34.63c0,2.85,2.35,5.16,5.26,5.16h11.04c2.9,0,5.26-2.31,5.26-5.16v-17.68c0-2.85,2.35-5.16,5.26-5.16h43.75c2.79,0,4.83,2.42,6.33,7.16,1.35,4.07,2.7,9.55,4.05,16.63.46,2.44,2.64,4.22,5.16,4.22h11.46c3.34,0,5.82-3.03,5.14-6.25-.92-4.37-1.87-7.99-2.76-10.91Z"/><path fill="#7e7e7e" d="M237.77,375.89h-51.04c-3.02,0-5.47-2.45-5.47-5.47h0c0-3.02,2.45-5.47,5.47-5.47h52.22c2.9,0,5.26-2.31,5.26-5.16v-6.95c0-2.85-2.35-5.16-5.26-5.16h-56.84c-3.54,0-6.97,1.05-10.51,3.05-3.43,2.11-6.11,4.63-8.37,7.69-2.14,3.05-3.22,6-3.22,8.95v48.84c0,2.85,2.35,5.16,5.26,5.16h10.72c2.9,0,5.26-2.31,5.26-5.16v-18c0-2.85,2.35-5.16,5.26-5.16h51.26c2.9,0,5.26-2.31,5.26-5.16v-6.84c0-2.85-2.35-5.16-5.26-5.16Z"/><path fill="#d38a3d" d="M1080.57,406.54c-1.35,3.47-3.02,6.33-4.7,8.38-1.68,2.04-3.91,3.58-6.94,4.7-2.91,1.12-6.61,1.64-11.2,1.74-11.75,0-19.25-5.11-22.5-15.23l-4.63-14.58c-1.52-4.78-8.91-4.83-10.51-.08l-4.78,14.16c-1,3.17-2.57,5.93-4.59,8.28-1.9,2.25-4.26,4.09-7.16,5.42-2.91,1.33-6.27,1.94-10.19,2.04-2.57,0-5.37-.61-8.4-1.94-2.91-1.22-5.6-2.96-8.17-5.42-2.46-2.45-4.48-5.31-5.71-8.58l-21.15-51.07c-1.36-3.28,1.29-6.78,5.13-6.78h13.34c2.28,0,4.33,1.29,5.14,3.25l17.58,42.65c.56,1.22.9,1.94,1.46,2.35.33.31.78.41,1.45.51,1,0,1.68-.2,2.24-.61.45-.51,1.01-1.43,1.45-2.96l13.18-41.56c.68-2.14,2.83-3.62,5.27-3.62h19.64c2.49,0,4.67,1.53,5.3,3.73l12.02,41.45c.45,1.64.9,2.66,1.56,3.17.56.41,1.35.61,2.13.72,1.79,0,3.14-1.23,4.03-3.89l16.82-41.89c.79-1.97,2.85-3.29,5.15-3.29h13.9c3.83,0,6.48,3.49,5.14,6.76l-21.31,52.22Z"/><path fill="#d38a3d" d="M1183.52,416.15v-17.43c0-2.84-2.46-5.15-5.49-5.15h-30.78c-3.03,0-5.49-2.31-5.49-5.15v-7.56c0-2.84,2.46-5.15,5.49-5.15h30.78c3.03,0,5.49-2.31,5.49-5.15v-17.75c0-2.84,2.46-5.15,5.49-5.15h11.64c3.03,0,5.49,2.31,5.49,5.15v63.34c0,2.84-2.46,5.15-5.49,5.15h-11.64c-3.03,0-5.49-2.31-5.49-5.15Z"/><path fill="#d38a3d" d="M1115.1,416.15v-63.13c0-2.84,2.46-5.15,5.49-5.15h11.19c3.03,0,5.49,2.31,5.49,5.15v63.13c0,2.84-2.46,5.15-5.49,5.15h-11.19c-3.03,0-5.49-2.31-5.49-5.15Z"/></svg>
+<div class="divider"></div>
+<span class="subtitle">Market Development Fund</span>
+</div>
+</div>
+</header>
+
+<div class="wrap" style="padding-top:24px;padding-bottom:48px">
+
+<div class="tabs">
+<button class="tab active" onclick="showTab('categories')">Categories</button>
+<button class="tab" onclick="showTab('process')">Process</button>
+<button class="tab" onclick="showTab('examples')">Examples</button>
+</div>
+
+<!-- ========== CATEGORIES TAB ========== -->
+<div id="tab-categories" class="tab-content active">
+
+<!-- Digital Marketing -->
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+<div>
+<div style="display:flex;align-items:center;flex-wrap:wrap">
+<span class="card-title">Digital Marketing</span>
+<span class="badge badge-priority"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> PRIORITY</span>
+<span class="badge badge-fast"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> FAST-TRACK</span>
+</div>
+<div class="card-desc">Highest-ROI channel — online campaigns that drive pipeline</div>
+</div>
+<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="qual-header yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7a33" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><h3>QUALIFIES</h3></div>
+<div class="qual-item"><span class="dot yes">•</span>Social media ads featuring FranklinWH solutions</div>
+<div class="qual-item"><span class="dot yes">•</span>Digital newsletters, email campaigns, and social selling</div>
+<div class="qual-item"><span class="dot yes">•</span>Banner ads, SEO campaigns, and video advertising</div>
+<div class="qual-item"><span class="dot yes">•</span>Digital catalogs and co-branded content</div>
+</div>
+<div>
+<div class="qual-header no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5902" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><h3>DOES NOT QUALIFY</h3></div>
+<div class="qual-item"><span class="dot no">•</span>Website redesigns or new page creation</div>
+<div class="qual-item"><span class="dot no">•</span>Rush charges or late fees</div>
+<div class="qual-item"><span class="dot no">•</span>General ads without FranklinWH focus</div>
+</div>
+</div>
+<div class="info-box gold"><div class="label">⚠ Key Requirement</div><div class="text">FranklinWH branding required; all design and content need pre-approval</div></div>
+<div class="info-box blue"><div class="label">📊 How We Track It</div><div class="text">Impressions, click-through rates, leads generated, pipeline created</div></div>
+<div class="proof-box"><div class="label">Proof of Performance</div><div class="proof-tags"><span class="proof-tag">Itemized invoices</span><span class="proof-tag">Screenshots with weblinks</span><span class="proof-tag">KPI report with leads & conversions</span></div></div>
+</div>
+</div>
+
+<!-- Events & Training -->
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+<div>
+<div style="display:flex;align-items:center;flex-wrap:wrap"><span class="card-title">Events & Training</span></div>
+<div class="card-desc">Live or virtual events tied to recruitment, training, or pipeline</div>
+</div>
+<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="qual-header yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7a33" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><h3>QUALIFIES</h3></div>
+<div class="qual-item"><span class="dot yes">•</span>Trade shows with targeted, qualified audiences</div>
+<div class="qual-item"><span class="dot yes">•</span>Regional training summits and product bootcamps</div>
+<div class="qual-item"><span class="dot yes">•</span>Booth setup, signage, AV, and material handling</div>
+<div class="qual-item"><span class="dot yes">•</span>Catering (break snacks, lunch), food trucks, sponsored meals</div>
+<div class="qual-item"><span class="dot yes">•</span>Co-branded swag distributed at events with a sales KPI</div>
+</div>
+<div>
+<div class="qual-header no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5902" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><h3>DOES NOT QUALIFY</h3></div>
+<div class="qual-item"><span class="dot no">•</span>Travel, lodging, or transportation expenses</div>
+<div class="qual-item"><span class="dot no">•</span>Employee-only events (team building, holiday parties)</div>
+<div class="qual-item"><span class="dot no">•</span>Customer appreciation without a training agenda</div>
+<div class="qual-item"><span class="dot no">•</span>Sports sponsorships without branding + business agenda</div>
+<div class="qual-item"><span class="dot no">•</span>Webinar platform fees (Zoom, Teams, etc.)</div>
+</div>
+</div>
+<div class="info-box gold"><div class="label">⚠ Key Requirement</div><div class="text">Detailed event description with agenda, booth plan, and expected pipeline metrics required for pre-approval</div></div>
+<div class="info-box blue"><div class="label">📊 How We Track It</div><div class="text">Attendee count, leads generated, pipeline created, deals closed within 90 days</div></div>
+<div class="proof-box"><div class="label">Proof of Performance</div><div class="proof-tags"><span class="proof-tag">Itemized invoices</span><span class="proof-tag">Sign-in sheets</span><span class="proof-tag">Photos with FranklinWH branding visible</span><span class="proof-tag">Post-event lead report</span></div></div>
+</div>
+</div>
+
+<!-- Marketing Collateral -->
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+<div>
+<div style="display:flex;align-items:center;flex-wrap:wrap"><span class="card-title">Marketing Collateral</span><span class="badge badge-fast"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> FAST-TRACK</span></div>
+<div class="card-desc">Printed materials, one-pagers, case studies, and co-branded handouts</div>
+</div>
+<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="qual-header yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7a33" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><h3>QUALIFIES</h3></div>
+<div class="qual-item"><span class="dot yes">•</span>Brochures, one-pagers, and co-branded handouts</div>
+<div class="qual-item"><span class="dot yes">•</span>Case studies (requires Legal, PR, and Marketing approval)</div>
+<div class="qual-item"><span class="dot yes">•</span>Design, printing, and in-region ground shipping</div>
+</div>
+<div>
+<div class="qual-header no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5902" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><h3>DOES NOT QUALIFY</h3></div>
+<div class="qual-item"><span class="dot no">•</span>Materials featuring only other vendors</div>
+<div class="qual-item"><span class="dot no">•</span>Shipping to multiple locations or out-of-region</div>
+<div class="qual-item"><span class="dot no">•</span>Rush charges</div>
+</div>
+</div>
+<div class="info-box gold"><div class="label">⚠ Key Requirement</div><div class="text">FranklinWH pre-approval on all design and content. If other vendors shown, reimbursement prorated to FranklinWH share of space</div></div>
+<div class="info-box blue"><div class="label">📊 How We Track It</div><div class="text">Impressions, target accounts reached, actual leads and conversion metrics</div></div>
+<div class="proof-box"><div class="label">Proof of Performance</div><div class="proof-tags"><span class="proof-tag">Itemized invoices</span><span class="proof-tag">Electronic copy or photo of final piece</span><span class="proof-tag">KPI report</span></div></div>
+</div>
+</div>
+
+<!-- Sales Incentives & SPIFs -->
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+<div>
+<div style="display:flex;align-items:center;flex-wrap:wrap"><span class="card-title">Sales Incentives & SPIFs</span></div>
+<div class="card-desc">Sales Performance Incentive Fund (SPIF) programs, tiered rewards, and giveaways — choose your target audience</div>
+</div>
+<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="qual-header yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7a33" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><h3>QUALIFIES</h3></div>
+<div class="qual-item"><span class="dot yes">•</span>SPIF programs (2–3 month duration recommended)</div>
+<div class="qual-item"><span class="dot yes">•</span>Tiered rewards for top performers</div>
+<div class="qual-item"><span class="dot yes">•</span>Pre-approved branded prizes and participation raffles</div>
+<div class="qual-item"><span class="dot yes">•</span>Co-branded promo items tied to specific sales targets</div>
+</div>
+<div>
+<div class="qual-header no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5902" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><h3>DOES NOT QUALIFY</h3></div>
+<div class="qual-item"><span class="dot no">•</span>Cash rewards or gift cards of any kind</div>
+<div class="qual-item"><span class="dot no">•</span>Non-branded gifts over $50 USD</div>
+<div class="qual-item"><span class="dot no">•</span>Incentives resulting in non-FranklinWH system sales</div>
+<div class="qual-item"><span class="dot no">•</span>Swag without a defined, measurable sales KPI</div>
+</div>
+</div>
+
+<div class="spif-section">
+<div class="spif-title">Choose Your SPIF Target</div>
+<div class="spif-sub">Work with your FranklinWH Sales Representative to select the best option for your market. Each uses a credit memo — no cash or gift cards.</div>
+
+<div class="spif-opt" onclick="toggleSpif(this)">
+<div class="spif-opt-header"><div class="spif-circle" style="background:#0eb9ff">A</div><div><div class="spif-opt-title">Distributor SPIF</div><div class="spif-opt-desc">SPIF goes to the distributor based on units sold.</div></div></div>
+<div class="spif-detail">
+<div class="spif-detail-box"><div class="dlabel">How it works:</div><div class="dtext">Distributor tracks equipment sold in real time against MDF-funded SPIF targets. Once the SPIF period ends or MDF allocation is exhausted, the contest closes.</div></div>
+<div class="spif-detail-box"><div class="dlabel">Why choose this:</div><div class="dtext">Easiest to track — distributors have real-time visibility into POs and units moved. Recommended starting point.</div></div>
+</div>
+</div>
+
+<div class="spif-opt" onclick="toggleSpif(this)">
+<div class="spif-opt-header"><div class="spif-circle" style="background:#D38A3D">B</div><div><div class="spif-opt-title">FranklinWH Certified Installer SPIF</div><div class="spif-opt-desc">SPIF goes to the FranklinWH Certified Installer putting product in homes.</div></div></div>
+<div class="spif-detail">
+<div class="spif-detail-box"><div class="dlabel">How it works:</div><div class="dtext">Distributor reports FranklinWH Certified Installer-level sales data. FranklinWH issues a credit memo to the distributor, who passes the credit through to qualifying FranklinWH Certified Installers.</div></div>
+<div class="spif-detail-box"><div class="dlabel">Why choose this:</div><div class="dtext">Targets the person physically moving the product. Requires distributor cooperation on FranklinWH Certified Installer-level tracking.</div></div>
+</div>
+</div>
+
+<div class="spif-opt" onclick="toggleSpif(this)">
+<div class="spif-opt-header"><div class="spif-circle" style="background:#0a7a33">C</div><div><div class="spif-opt-title">Homeowner Incentive</div><div class="spif-opt-desc">Savings passed to the homeowner via reduced project cost.</div></div></div>
+<div class="spif-detail">
+<div class="spif-detail-box"><div class="dlabel">How it works:</div><div class="dtext">FranklinWH issues a credit memo to the distributor. Distributor reduces cost to the FranklinWH Certified Installer. FranklinWH Certified Installer passes savings to the homeowner as a lower project price. No gift cards, no cash — just a reduced price.</div></div>
+<div class="spif-detail-box"><div class="dlabel">Why choose this:</div><div class="dtext">Makes FranklinWH more competitive at the point of sale and gives homeowners more savings.</div></div>
+</div>
+</div>
+
+<div class="spif-flow"><strong>How the money flows:</strong> <span>FranklinWH issues a credit memo to the distributor — distributor applies credit toward FranklinWH Certified Installer cost — savings passed through the chain. No money exchanging hands directly. SPIF amounts are flexible — work with your FranklinWH Sales Representative to set per-unit amounts that stretch your MDF allocation across a meaningful contest duration (2–3 months recommended).</span></div>
+</div>
+
+<div class="info-box gold"><div class="label">⚠ Key Requirement</div><div class="text">All requests require FranklinWH marketing team review. A clearly defined sales-linked KPI is mandatory — requests without one are automatically declined</div></div>
+<div class="info-box blue"><div class="label">📊 How We Track It</div><div class="text">Units sold during SPIF period, winner details, sales uplift data, ROI calculation</div></div>
+<div class="proof-box"><div class="label">Proof of Performance</div><div class="proof-tags"><span class="proof-tag">Itemized invoices</span><span class="proof-tag">Recipient names & companies</span><span class="proof-tag">Results report with sales uplift</span><span class="proof-tag">Mock-up design approvals</span></div></div>
+</div>
+</div>
+
+<!-- Demo Installations -->
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+<div>
+<div style="display:flex;align-items:center;flex-wrap:wrap"><span class="card-title">Demo Installations</span><span class="badge badge-fast"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> FAST-TRACK</span></div>
+<div class="card-desc">Solution walls — FranklinWH hardware and software demos in storefronts or warehouses</div>
+</div>
+<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="qual-header yes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7a33" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><h3>QUALIFIES</h3></div>
+<div class="qual-item"><span class="dot yes">•</span>FranklinWH branded hardware and software</div>
+<div class="qual-item"><span class="dot yes">•</span>Support and setup services</div>
+<div class="qual-item"><span class="dot yes">•</span>Shipping and taxes for approved equipment</div>
+<div class="qual-item"><span class="dot yes">•</span>Dummy/demo units for storefront or warehouse display</div>
+</div>
+<div>
+<div class="qual-header no"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5902" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><h3>DOES NOT QUALIFY</h3></div>
+<div class="qual-item"><span class="dot no">•</span>Non-FranklinWH or competitor products</div>
+<div class="qual-item"><span class="dot no">•</span>Non-branding related expenses</div>
+</div>
+</div>
+<div class="info-box gold"><div class="label">⚠ Key Requirement</div><div class="text">Invoice required directly from distributor to FranklinWH — FranklinWH products only</div></div>
+<div class="info-box blue"><div class="label">📊 How We Track It</div><div class="text">Equipment serial numbers, demo usage metrics, leads generated from demos</div></div>
+<div class="proof-box"><div class="label">Proof of Performance</div><div class="proof-tags"><span class="proof-tag">Final itemized invoice for FranklinWH products</span><span class="proof-tag">Serial numbers & setup docs</span><span class="proof-tag">Demo usage log</span></div></div>
+</div>
+</div>
+
+</div>
+
+<!-- ========== PROCESS TAB ========== -->
+<div id="tab-process" class="tab-content">
+
+<div class="process-card">
+<h3>Two Approval Lanes</h3>
+<div class="lanes">
+<div class="lane fast">
+<div class="ltitle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0eb9ff" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Fast-Track</div>
+<div class="ldesc">For requests under $2,000 in eligible categories (Digital, Collateral, Demo Installations).</div>
+<div class="ltime"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 48-hour turnaround</div>
+</div>
+<div class="lane std">
+<div class="ltitle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D38A3D" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Standard Review</div>
+<div class="ldesc">For Events, Incentives/SPIFs, requests over $2K, or anything non-standard.</div>
+<div class="ltime"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 1–2 week turnaround</div>
+</div>
+</div>
+</div>
+
+<div class="process-card">
+<h3>Five Steps — That's It</h3>
+<div class="step"><div class="step-num">1</div><div><div class="step-title">Pick your category</div><div class="step-desc">Which of the 5 categories fits? For SPIFs, also choose Option A, B, or C.</div></div></div>
+<div class="step"><div class="step-num">2</div><div><div class="step-title">Check the criteria</div><div class="step-desc">Does your idea appear in the Qualifies list? Is anything in the Does Not Qualify list?</div></div></div>
+<div class="step"><div class="step-num">3</div><div><div class="step-title">Define your sales KPI</div><div class="step-desc">How will you measure pipeline, leads, or closed deals? This is the most important step. No KPI = automatic decline.</div></div></div>
+<div class="step"><div class="step-num">4</div><div><div class="step-title">Get pre-approval</div><div class="step-desc">Email your MDF Marketing contact with: category, budget, KPIs, target audience, expected outcomes. Do NOT spend until you receive written approval.</div></div></div>
+<div class="step"><div class="step-num">5</div><div><div class="step-title">Execute and report</div><div class="step-desc">Collect invoices, proof of performance, and KPI results. Submit for reimbursement within 60 days of completion.</div></div></div>
+</div>
+
+<div class="process-card">
+<h3>Critical Deadlines</h3>
+<div class="deadline"><span class="icon">⏰</span><div><strong>Funds expire:</strong> <span>End of the next calendar year from accrual date (e.g. funds accrued in Jan 2026 expire end of 2027).</span></div></div>
+<div class="deadline"><span class="icon">⏰</span><div><strong>Reimbursement window:</strong> <span>60 days from activity completion.</span></div></div>
+<div class="deadline"><span class="icon">⏰</span><div><strong>Credit memo processing:</strong> <span>30 days from complete submission.</span></div></div>
+</div>
+
+<div class="reminders">
+<h3>Remember</h3>
+<div class="rem-grid">
+<div>
+<div class="rem-item"><span class="yes">✓</span> Measurable outcomes always</div>
+<div class="rem-item"><span class="yes">✓</span> Pre-approval before spending</div>
+<div class="rem-item"><span class="yes">✓</span> Follow branding guidelines</div>
+<div class="rem-item"><span class="yes">✓</span> Track and report ROI</div>
+<div class="rem-item"><span class="yes">✓</span> Tie all swag to an event or SPIF</div>
+</div>
+<div>
+<div class="rem-item"><span class="no">✗</span> Don't spend without approval</div>
+<div class="rem-item"><span class="no">✗</span> Don't fund employee-only events</div>
+<div class="rem-item"><span class="no">✗</span> Don't feature other vendors prominently</div>
+<div class="rem-item"><span class="no">✗</span> Don't submit after 60 days</div>
+<div class="rem-item"><span class="no">✗</span> No cash rewards or gift cards</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- ========== EXAMPLES TAB ========== -->
+<div id="tab-examples" class="tab-content">
+<p style="font-size:14px;color:var(--mid);margin-bottom:12px">Use these scenarios to gut-check your request before submitting.</p>
+
+<div class="ex-card approved" onclick="toggleEx(this)">
+<div class="ex-header"><div class="ex-left"><svg class="check-icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke-width="1.5"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ex-title">Event — APPROVED</span></div><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ex-body"><div class="elabel">SCENARIO</div><div class="etext">Distributor hosts a regional FranklinWH Certified Installer summit with FranklinWH product training, booth space, materials, and lunch for 30 reps.</div><div class="ex-box light"><div class="elabel">WHY</div><div class="etext" style="margin:0">Training agenda, FranklinWH co-branding, measurable attendees, expected pipeline generation.</div></div><div class="ex-box warm"><div class="elabel">DECISION</div><div class="etext" style="margin:0">Approved. Requires sign-in sheet, branded photos, and follow-up lead report within 60 days.</div></div></div>
+</div>
+
+<div class="ex-card rejected" onclick="toggleEx(this)">
+<div class="ex-header"><div class="ex-left"><svg class="x-icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke-width="1.5"/><path d="M7.5 7.5L14.5 14.5M14.5 7.5L7.5 14.5" stroke-width="1.8" stroke-linecap="round"/></svg><span class="ex-title">Event — REJECTED</span></div><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ex-body"><div class="elabel">SCENARIO</div><div class="etext">Distributor wants to sponsor a sporting event as a community goodwill gesture.</div><div class="ex-box light"><div class="elabel">WHY</div><div class="etext" style="margin:0">No FranklinWH branding, no training agenda, no pipeline generation metrics.</div></div><div class="ex-box warm"><div class="elabel">DECISION</div><div class="etext" style="margin:0">Convert to a branded FranklinWH event with messaging and a formal training component.</div></div></div>
+</div>
+
+<div class="ex-card approved" onclick="toggleEx(this)">
+<div class="ex-header"><div class="ex-left"><svg class="check-icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke-width="1.5"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ex-title">Swag + SPIF — APPROVED</span></div><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ex-body"><div class="elabel">SCENARIO</div><div class="etext">Distributor plans to use $2–4K in MDF toward a sales SPIF for their top 4 accounts, plus branded hats for the participants.</div><div class="ex-box light"><div class="elabel">WHY</div><div class="etext" style="margin:0">Clear sales KPI (top account activation), defined audience (4 accounts), SPIF + collateral working together.</div></div><div class="ex-box warm"><div class="elabel">DECISION</div><div class="etext" style="margin:0">Approved. Requires SPIF results reporting, hat distribution log with recipient details, and post-event lead report.</div></div></div>
+</div>
+
+<div class="ex-card rejected" onclick="toggleEx(this)">
+<div class="ex-header"><div class="ex-left"><svg class="x-icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke-width="1.5"/><path d="M7.5 7.5L14.5 14.5M14.5 7.5L7.5 14.5" stroke-width="1.8" stroke-linecap="round"/></svg><span class="ex-title">Swag — REJECTED</span></div><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+<div class="ex-body"><div class="elabel">SCENARIO</div><div class="etext">Distributor requests FranklinWH hats to have on hand for general customer meetings.</div><div class="ex-box light"><div class="elabel">WHY</div><div class="etext" style="margin:0">No sales KPI, no target event, no measurable outcome. This is inventory building. Hats must be attached to a specific initiative.</div></div><div class="ex-box warm"><div class="elabel">DECISION</div><div class="etext" style="margin:0">Tie the hats to a specific event, training, or SPIF with a measurable sales target (e.g., "50 hats for FranklinWH Certified Installer kickoff targeting 5 new accounts").</div></div></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function showTab(name){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleCard(el){
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.card-header').forEach(h=>{h.classList.remove('open');h.nextElementSibling.classList.remove('open')});
+  if(!wasOpen){el.classList.add('open');el.nextElementSibling.classList.add('open')}
+}
+function toggleSpif(el){
+  const wasOpen=el.classList.contains('open');
+  el.parentElement.querySelectorAll('.spif-opt').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleEx(el){
+  const body=el.querySelector('.ex-body');
+  const wasOpen=body.classList.contains('open');
+  document.querySelectorAll('.ex-body').forEach(b=>b.classList.remove('open'));
+  if(!wasOpen)body.classList.add('open');
+}
+</script>
+</body>
+</html>
